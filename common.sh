@@ -185,6 +185,10 @@ if [ "${UPSTREAM_IRONIC:-false}" != "false" ] ; then
     export IRONIC_IPA_DOWNLOADER_LOCAL_IMAGE=${IRONIC_IPA_DOWNLOADER_LOCAL_IMAGE:-"quay.io/metal3-io/ironic-ipa-downloader:master"}
     export IRONIC_STATIC_IP_MANAGER_LOCAL_IMAGE=${IRONIC_STATIC_IP_MANAGER_LOCAL_IMAGE:-"quay.io/metal3-io/static-ip-manager"}
     export BAREMETAL_OPERATOR_LOCAL_IMAGE=${BAREMETAL_OPERATOR_LOCAL_IMAGE:-"quay.io/metal3-io/baremetal-operator"}
+  else
+  echo "get ironic image from payload?"
+  export OPENSHIFT_IRONIC=$(oc adm release info ${OPENSHIFT_RELEASE_IMAGE}  -a ${PULL_SECRET_FILE}  --image-for ironic )
+  echo "openshift IRONIC $OPENSHIFT_IRONIC"
 fi
 
 if [ -z "$KNI_INSTALL_FROM_GIT" ]; then
@@ -282,7 +286,7 @@ export VBMC_MAX_PORT=$((VBMC_BASE_PORT + NUM_MASTERS + NUM_WORKERS + NUM_EXTRA_W
 export REDFISH_EMULATOR_IGNORE_BOOT_DEVICE="${REDFISH_EMULATOR_IGNORE_BOOT_DEVICE:-False}"
 
 # Which docker registry image should we use?
-export DOCKER_REGISTRY_IMAGE=${DOCKER_REGISTRY_IMAGE:-"quay.io/libpod/registry:2"}
+export DOCKER_REGISTRY_IMAGE=${DOCKER_REGISTRY_IMAGE:-"quay.io/libpod/registry:2.8"}
 
 export KUBECONFIG="${SCRIPTDIR}/ocp/$CLUSTER_NAME/auth/kubeconfig"
 
