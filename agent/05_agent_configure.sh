@@ -381,7 +381,7 @@ EOF
     sudo firewall-cmd --zone libvirt --add-port=${MACHINE_CONFIG_SERVER_PORT}/tcp
     sudo firewall-cmd --zone libvirt --add-port=${KUBE_API_PORT}/tcp
     sudo firewall-cmd --zone libvirt --add-port=${INGRESS_ROUTER_PORT}/tcp
-    sudo podman run -d  --net host -v ${WORKING_DIR}:/etc/haproxy/:z --entrypoint bash --name extlb quay.io/openshift/origin-haproxy-router  -c 'haproxy -f /etc/haproxy/haproxy.cfg'
+    sudo podman run --user root -d --net host -v ${WORKING_DIR}:/etc/haproxy/:z --entrypoint bash --name extlb  docker.io/library/haproxy:latest  -c 'haproxy -f /etc/haproxy/haproxy.cfg'
 
     # update api and add api-int and *.apps entries to baremetal network DNS
     # delete existing entries pointing to the wrong api ip before adding correct entry
@@ -468,7 +468,7 @@ function get_nodes_bmc_info() {
       fi
 
       if ! is_running sushy-tools; then
-        sudo podman run -d --net host --privileged --name sushy-tools \
+        sudo podman run --user root -d --net host --privileged --name sushy-tools \
              -v "$WORKING_DIR/virtualbmc/sushy-tools":/root/sushy -v "/root/.ssh":/root/ssh \
              "${SUSHY_TOOLS_IMAGE}"
       fi

@@ -239,7 +239,7 @@ if [ "$NODES_PLATFORM" = "libvirt" ]; then
     fi
 
     if ! is_running sushy-tools; then
-        sudo podman run -d --net host --privileged --name sushy-tools --pod ironic-pod \
+        sudo podman run --user root  -d --net host --privileged --name sushy-tools --pod ironic-pod \
              -v "$WORKING_DIR/virtualbmc/sushy-tools":/root/sushy -v "/root/.ssh":/root/ssh \
              "${SUSHY_TOOLS_IMAGE}"
     fi
