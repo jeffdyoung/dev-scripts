@@ -297,6 +297,9 @@ export VBMC_BASE_PORT=${VBMC_BASE_PORT:-"6230"}
 export VBMC_MAX_PORT=$((VBMC_BASE_PORT + NUM_MASTERS + NUM_WORKERS + NUM_EXTRA_WORKERS - 1))
 export REDFISH_EMULATOR_IGNORE_BOOT_DEVICE="${REDFISH_EMULATOR_IGNORE_BOOT_DEVICE:-False}"
 
+# HAProxy image
+export HAPROXY_IMAGE=${HAPROXY_IMAGE:-"quay.io/openshift/origin-haproxy-router"}
+
 # Which docker registry image should we use?
 export DOCKER_REGISTRY_IMAGE=${DOCKER_REGISTRY_IMAGE:-"quay.io/libpod/registry:2.8"}
 

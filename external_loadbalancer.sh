@@ -61,7 +61,7 @@ backend ingress
     server w-1 ${worker1}:80 check check-ssl port 1936 inter 1s fall 2 rise 3 verify none
 EOF
 
-sudo podman run -d  --net host -v "${WORKING_DIR}":/etc/haproxy/:z --entrypoint bash --name extlb  docker.io/library/haproxy:latest   -c 'haproxy -f /etc/haproxy/haproxy.cfg'
+sudo podman run -d  --net host -v "${WORKING_DIR}":/etc/haproxy/:z --entrypoint bash --name extlb  ${HAPROXY_IMAGE}   -c 'haproxy -f /etc/haproxy/haproxy.cfg'
 
 sleep 5
 
